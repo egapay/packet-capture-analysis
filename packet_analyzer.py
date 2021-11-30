@@ -1,5 +1,6 @@
 from filter_packets import *
 from packet_parser import *
+from compute_metrics import *
 
 node1 = []
 node2 = []
@@ -26,3 +27,4 @@ for i in range(1, 5):
 		parse(afile, node4)
 
 print(node1)
+compute(node1, 1)
