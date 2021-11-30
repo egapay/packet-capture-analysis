@@ -33,3 +33,4 @@ for i in range(1, 5):
 		afile = 'Node{}_filtered.txt'.format(i)
 		parse(afile, node4)
 
+
