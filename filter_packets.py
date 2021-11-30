@@ -25,9 +25,6 @@ def filter(file):
 		count += 1
 	
 
-filter("Node1.txt")
-filter("Node2.txt")
-filter("Node3.txt")
-filter("Node4.txt")
+
 
 
