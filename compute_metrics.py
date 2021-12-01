@@ -48,10 +48,13 @@ def compute(List, node) :
 
   #print(str((float(List[0][5]) - 28)/(float(List[0][1]))))
   #Echo Request Goodput
-  
-  f = 0
-  while f < len(List):
-    if(List[f][8] == "request"): #checks to make sure that it is a request packet
-      goodput = format(((float(List[f][5]) - 28)/1000)/(float(List[f][1])), ".5f") #sets the output variable to the length of the packet - 28 and divdes it by 1000 (kB/sec then divides it by the time
+  value = 0
+  while value < len(List):
+    if(List[value][8] == "request"): #checks to make sure that it is a request packet
+      goodput = format(((float(List[value][5]) - 28)/1000)/(float(List[value][1])), ".5f") #sets the output variable to the length of the packet - 28 and divdes it by 1000 (kB/sec then divides it by the time
+      if(List[value + 1][8] == "reply"): #this makes sure that the next packet is reply packet
+          delay = (float(List[value][1]) - float(List[value + 1][1]) * 1000000) * -1 # takes the value of the request packet and subtracts it from the reply time then multiply by 1000000(microseconds)
+          #print(str(delay))
       print(goodput)
-    f += 1
+
+    value += 1
