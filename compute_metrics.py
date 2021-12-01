@@ -45,3 +45,13 @@ def compute(List, node) :
   print(RecReq)
   print(SentRep)
   print(RecRep)
+
+  #print(str((float(List[0][5]) - 28)/(float(List[0][1]))))
+  #Echo Request Goodput
+  
+  f = 0
+  while f < len(List):
+    if(List[f][8] == "request"): #checks to make sure that it is a request packet
+      goodput = format(((float(List[f][5]) - 28)/1000)/(float(List[f][1])), ".5f") #sets the output variable to the length of the packet - 28 and divdes it by 1000 (kB/sec then divides it by the time
+      print(goodput)
+    f += 1
