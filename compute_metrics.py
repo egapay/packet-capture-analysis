@@ -49,18 +49,9 @@ def compute(List, node) :
          DataReqRec =  DataReqRec + (int(List[i][5])-32)
          RecReq = RecReq + 1
 
-         RequestNo = List[i][0]
-         RequestTime = List[i][1]
-
       #Calculate The Amount of Replies sent
       if List[i][2] == source and List[i][8] == reply:
          SentRep = SentRep + 1 
-
-         ReplyNo = List[i][0]
-         ReplyTime = List[i][1]
-
-         if (int(ReplyNo) - int(RequestNo)) == corresponding:
-            TimeNano = TimeNano + (float(ReplyTime) - float(RequestTime))
 
       #Calculate The Amount of Replies Recieved
       if List[i][3] == source and List[i][8] == reply:
