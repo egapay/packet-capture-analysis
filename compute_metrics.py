@@ -91,8 +91,14 @@ def compute(List, node) :
    print(TotalReqRec)
    print(DataReqSent)
    print(DataReqRec)
-   print("RTT = " + str(rtt))
+   print("Average RTT (ms): " + str(rtt))
   #print(str((float(List[0][5]) - 28)/(float(List[0][1]))))
+
+  #Echo Request Throughput
+   
+   throughput = round((float(TotalReqSent)/float(TimeNano) * 0.001), 1)
+   print("Echo Request Throughput: " + str(throughput))
+
   #Echo Request Goodput & average reply delay
 
    print(goodput/TimeNano)
