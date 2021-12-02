@@ -41,7 +41,7 @@ def compute(List, node) :
          SentReq = SentReq + 1 
          #Total Echo Requests Bytes Sent
          TotalReqSent =  TotalReqSent + int(List[i][5]) 
-         DataReqSent =  DataReqSent + (int(List[i][5])-32)
+         DataReqSent =  DataReqSent + (int(List[i][5])-42)
 
          RequestNo = List[i][0]
          RequestTime = List[i][1]
@@ -49,7 +49,7 @@ def compute(List, node) :
       #Calculate The Amount of Requests Recieved
       if List[i][3] == source and List[i][8] == request:
          TotalReqRec =  TotalReqRec + int(List[i][5]) 
-         DataReqRec =  DataReqRec + (int(List[i][5])-32)
+         DataReqRec =  DataReqRec + (int(List[i][5])-42)
          RecReq = RecReq + 1
 
       #Calculate The Amount of Replies sent
