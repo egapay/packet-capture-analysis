@@ -24,6 +24,8 @@ def compute(List, node) :
    averagereply = 0
    counter=0
    goodput = 0
+   sumTTL = 0
+   count = 0
 
    #Set Which Source IP to use based on what Node we getting info from
    if node == 1:
@@ -36,6 +38,7 @@ def compute(List, node) :
       source = "192.168.200.2"
    reply = "reply"
    request = "request" 
+   destination = "Destination"
 
    #For Loop To Iterate Through Info List
    for x in List:
@@ -78,7 +81,15 @@ def compute(List, node) :
             TimeNano = TimeNano + (float(ReplyTime) - float(RequestTime))
       
 
-      
+      if List[i][6] != destination:
+        TTL = List[i][11]
+        sTTL = TTL[4] + TTL[5] + TTL[6]
+        #print(129 - int(sTTL)) #using this to find out each hop counts
+        sumTTL = sumTTL + (129 - int(sTTL))
+        #print("SumTTL = " + str(sumTTL)) #Using This to find the sum of each hop coun
+        count = count +1
+        #print(count) #using this to check the count of how many successfuly go through
+
       i= i + 1
 
    rtt = round(((TimeNano / float(128)) / 0.001), 2) #needs to be edited, not sure if in ms
@@ -92,6 +103,7 @@ def compute(List, node) :
    print(DataReqSent)
    print(DataReqRec)
    print("Average RTT (ms): " + str(rtt))
+   print("in progress avg hop count " + str(sumTTL/count))
   #print(str((float(List[0][5]) - 28)/(float(List[0][1]))))
 
   #Echo Request Throughput
