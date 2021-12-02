@@ -21,6 +21,9 @@ def compute(List, node) :
    corresponding = 1 #value to check for corresponding Echo Request and Reply
    rtt = 0
    TimeNano = 0
+   averagereply = 0
+   counter=0
+   goodput = 0
 
    #Set Which Source IP to use based on what Node we getting info from
    if node == 1:
@@ -42,7 +45,7 @@ def compute(List, node) :
          #Total Echo Requests Bytes Sent
          TotalReqSent =  TotalReqSent + int(List[i][5]) 
          DataReqSent =  DataReqSent + (int(List[i][5])-42)
-
+         goodput += (float(List[i][5])-28)/1000
          RequestNo = List[i][0]
          RequestTime = List[i][1]
 
@@ -51,10 +54,18 @@ def compute(List, node) :
          TotalReqRec =  TotalReqRec + int(List[i][5]) 
          DataReqRec =  DataReqRec + (int(List[i][5])-42)
          RecReq = RecReq + 1
+         RequestNo = List[i][0]
+         RequestTime = List[i][1]
 
       #Calculate The Amount of Replies sent
       if List[i][2] == source and List[i][8] == reply:
          SentRep = SentRep + 1 
+         ReplyNo = List[i][0]
+         ReplyTime = List[i][1]
+         if (int(ReplyNo) - int(RequestNo)) == corresponding:
+            delay = format((float(List[i+1][1]) - float(List[i][1])) * 1000000, ".2f") # takes the value of the request packet and subtracts it from the reply time then multiply by 1000000(microseconds)
+            averagereply += float(delay)
+            counter += 1
 
       #Calculate The Amount of Replies Recieved
       if List[i][3] == source and List[i][8] == reply:
@@ -83,19 +94,6 @@ def compute(List, node) :
    print("RTT = " + str(rtt))
   #print(str((float(List[0][5]) - 28)/(float(List[0][1]))))
   #Echo Request Goodput & average reply delay
-   averagereply = 0
-   value = 0
-   counter=0
-   goodput = 0
-   while(value < len(List)):
-      if(List[value][8] == "request"): #checks to make sure that it is a request packet(float(List[value][1]))
-         goodput += (float(List[value][5]) - 28)/1000
-         if(List[value + 1][8] == "reply"): #this makes sure that the next packet is reply packet
-            delay = format((float(List[value+1][1]) - float(List[value][1])) * 1000000, ".2f") # takes the value of the request packet and subtracts it from the reply time then multiply by 1000000(microseconds)
-            averagereply += float(delay)
-            counter += 1
-         #print(goodput)
-      value += 1
-   goodput = goodput/1000
+
    print(goodput/TimeNano)
-   print(format(averagereply/counter, ".3f"))
+   print(format(averagereply/counter, ".2f"))
