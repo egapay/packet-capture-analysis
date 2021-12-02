@@ -26,5 +26,4 @@ for i in range(1, 5):
 		afile = 'Node{}_filtered.txt'.format(i)
 		parse(afile, node4)
 
-print(node1)
 compute(node1, 1)
