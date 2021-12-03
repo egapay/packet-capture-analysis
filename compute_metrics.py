@@ -21,11 +21,9 @@ def compute(List, node) :
    corresponding = 1 #value to check for corresponding Echo Request and Reply
    rtt = 0
    TimeNano = 0
-   averagereply = 0
    counter=0
    goodput = 0
-   sumTTL = 0
-   count = 0
+   delay = 0
 
    #Set Which Source IP to use based on what Node we getting info from
    if node == 1:
@@ -38,7 +36,6 @@ def compute(List, node) :
       source = "192.168.200.2"
    reply = "reply"
    request = "request" 
-   destination = "Destination"
 
    #For Loop To Iterate Through Info List
    for x in List:
@@ -48,9 +45,9 @@ def compute(List, node) :
          #Total Echo Requests Bytes Sent
          TotalReqSent =  TotalReqSent + int(List[i][5]) 
          DataReqSent =  DataReqSent + (int(List[i][5])-42)
-         goodput += (float(List[i][5])-28)/1000
          RequestNo = List[i][0]
          RequestTime = List[i][1]
+         goodput += (float(List[i][5])-42)/1000
 
       #Calculate The Amount of Requests Recieved
       if List[i][3] == source and List[i][8] == request:
@@ -59,16 +56,14 @@ def compute(List, node) :
          RecReq = RecReq + 1
          RequestNo = List[i][0]
          RequestTime = List[i][1]
-
+         if(int(List[i+1][0]) - int(List[i][0]) == corresponding):
+            delay += (float(List[i+1][1]) - float(List[i][1])) * 1000000
+            counter += 1
       #Calculate The Amount of Replies sent
       if List[i][2] == source and List[i][8] == reply:
          SentRep = SentRep + 1 
          ReplyNo = List[i][0]
          ReplyTime = List[i][1]
-         if (int(ReplyNo) - int(RequestNo)) == corresponding:
-            delay = format((float(List[i+1][1]) - float(List[i][1])) * 1000000, ".2f") # takes the value of the request packet and subtracts it from the reply time then multiply by 1000000(microseconds)
-            averagereply += float(delay)
-            counter += 1
 
       #Calculate The Amount of Replies Recieved
       if List[i][3] == source and List[i][8] == reply:
@@ -81,18 +76,12 @@ def compute(List, node) :
             TimeNano = TimeNano + (float(ReplyTime) - float(RequestTime))
       
 
-      if List[i][6] != destination:
-        TTL = List[i][11]
-        sTTL = TTL[4] + TTL[5] + TTL[6]
-        #print(129 - int(sTTL)) #using this to find out each hop counts
-        sumTTL = sumTTL + (129 - int(sTTL))
-        #print("SumTTL = " + str(sumTTL)) #Using This to find the sum of each hop coun
-        count = count +1
-        #print(count) #using this to check the count of how many successfuly go through
-
+      
       i= i + 1
 
    rtt = round(((TimeNano / float(128)) / 0.001), 2) #needs to be edited, not sure if in ms
+   avggoodput = round(goodput/TimeNano, 1)
+   avgrplydelay = round(delay/counter, 2)
    print( "Amount of Requests Sent = " + str(SentReq))	
    print("Amount of Requests Recieved = " + str(RecReq))
    print("Amount of Replies Sent = " + str(SentRep))
@@ -102,16 +91,6 @@ def compute(List, node) :
    print(TotalReqRec)
    print(DataReqSent)
    print(DataReqRec)
-   print("Average RTT (ms): " + str(rtt))
-   print("in progress avg hop count " + str(sumTTL/count))
-  #print(str((float(List[0][5]) - 28)/(float(List[0][1]))))
-
-  #Echo Request Throughput
-   
-   throughput = round((float(TotalReqSent)/float(TimeNano) * 0.001), 1)
-   print("Echo Request Throughput: " + str(throughput))
-
-  #Echo Request Goodput & average reply delay
-
-   print(goodput/TimeNano)
-   print(format(averagereply/counter, ".2f"))
+   print("RTT = " + str(rtt))
+   print("Echo Request Goodput(kB/sec) = " + str(avggoodput))
+   print("Average Reply Delay(us) = " + str(avgrplydelay))
