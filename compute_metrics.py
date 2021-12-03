@@ -74,23 +74,32 @@ def compute(List, node) :
 
          if (int(ReplyNo) - int(RequestNo)) == corresponding:
             TimeNano = TimeNano + (float(ReplyTime) - float(RequestTime))
-      
-
-      
       i= i + 1
 
-   rtt = round(((TimeNano / float(128)) / 0.001), 2) #needs to be edited, not sure if in ms
-   avggoodput = round(goodput/TimeNano, 1)
-   avgrplydelay = round(delay/counter, 2)
-   print( "Amount of Requests Sent = " + str(SentReq))	
-   print("Amount of Requests Recieved = " + str(RecReq))
-   print("Amount of Replies Sent = " + str(SentRep))
-   print("Amount of Replies Recieved = " + str(RecRep))
+   #Average Ping Round Trip Time (RTT)
+   rtt = round(((TimeNano / float(128)) / 0.001), 2)
 
-   print(TotalReqSent)
-   print(TotalReqRec)
-   print(DataReqSent)
-   print(DataReqRec)
-   print("RTT = " + str(rtt))
-   print("Echo Request Goodput(kB/sec) = " + str(avggoodput))
-   print("Average Reply Delay(us) = " + str(avgrplydelay))
+   #Echo Request Throughput
+   throughput = round((float(TotalReqSent)/float(TimeNano) * 0.001), 1)
+
+   #Echo Request Goodput
+   avggoodput = round(goodput/TimeNano, 1)
+
+   #Average Reply Delay
+   avgrplydelay = round(delay/counter, 2)
+
+   print("Echo Request Sent: " + str(SentReq))	
+   print("Echo Requests Recieved: " + str(RecReq))
+   print("Echo Replies Sent: " + str(SentRep))
+   print("Echo Replies Recieved: " + str(RecRep))
+   print("Echo Request Bytes Sent: " + str(TotalReqSent))
+   print("Echo Request Bytes Received: " + str(TotalReqRec))
+   print("Echo Request Data Sent: " + str(DataReqSent))
+   print("Echo Request Data Received: " + str(DataReqRec) + "\n")
+   print("Average RTT (ms): " + str(rtt))
+   print("Echo Request Throughput: " + str(throughput))
+   print("Echo Request Goodput(kB/sec): " + str(avggoodput))
+   print("Average Reply Delay(us): " + str(avgrplydelay) + "\n")
+   print("Average Echo Request Hop Count: ")
+
+   #Ideas for printing out to CSV file: Return all of the variables listed above, in packet_analyzer.py create, open, and write to file.
