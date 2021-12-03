@@ -103,3 +103,4 @@ def compute(List, node) :
    print("Average Echo Request Hop Count: ")
 
    #Ideas for printing out to CSV file: Return all of the variables listed above, in packet_analyzer.py create, open, and write to file.
+   return SentReq, RecReq, SentRep, RecRep, TotalReqSent, TotalReqRec, DataReqSent, DataReqRec, rtt, throughput, avggoodput, avgrplydelay
