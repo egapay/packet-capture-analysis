@@ -18,6 +18,8 @@ def compute(List, node) :
    RequestTime = 0
    ReplyNo = 0
    ReplyTime = 0
+   sumTTL = 0
+   count = 0
    corresponding = 1 #value to check for corresponding Echo Request and Reply
    rtt = 0
    TimeNano = 0
@@ -36,7 +38,7 @@ def compute(List, node) :
       source = "192.168.200.2"
    reply = "reply"
    request = "request" 
-
+   destination = "destination"
    #For Loop To Iterate Through Info List
    for x in List:
       #Calculate The Amount of Requests Sent
@@ -74,6 +76,15 @@ def compute(List, node) :
 
          if (int(ReplyNo) - int(RequestNo)) == corresponding:
             TimeNano = TimeNano + (float(ReplyTime) - float(RequestTime))
+            if List[i][6] != destination:
+              TTL = List[i][11]
+              #Combines each number from the TTL metric
+              sTTL = TTL[4] + TTL[5] + TTL[6]
+              #print(129 - int(sTTL)) #using this to find out each hop counts
+              sumTTL = sumTTL + (129 - int(sTTL))
+              #print("SumTTL = " + str(sumTTL)) #Using This to find the sum of ea$
+              count = count +1
+              #print(count) #using this to check the count of how many successful$
       i= i + 1
 
    #Average Ping Round Trip Time (RTT)
@@ -87,6 +98,8 @@ def compute(List, node) :
 
    #Average Reply Delay
    avgrplydelay = round(delay/counter, 2)
+   #Average HopCount
+   avgHopCount = round(sumTTL/count,2)
 
    print("Echo Request Sent: " + str(SentReq))	
    print("Echo Requests Recieved: " + str(RecReq))
@@ -100,7 +113,7 @@ def compute(List, node) :
    print("Echo Request Throughput: " + str(throughput))
    print("Echo Request Goodput(kB/sec): " + str(avggoodput))
    print("Average Reply Delay(us): " + str(avgrplydelay) + "\n")
-   print("Average Echo Request Hop Count: ")
+   print("Average Echo Request Hop Count: " + str(avgHopCount) )
 
    #Ideas for printing out to CSV file: Return all of the variables listed above, in packet_analyzer.py create, open, and write to file.
-   return SentReq, RecReq, SentRep, RecRep, TotalReqSent, TotalReqRec, DataReqSent, DataReqRec, rtt, throughput, avggoodput, avgrplydelay
+   return SentReq, RecReq, SentRep, RecRep, TotalReqSent, TotalReqRec, DataReqSent, DataReqRec, rtt, throughput, avggoodput, avgrplydelay, avgHopCount
