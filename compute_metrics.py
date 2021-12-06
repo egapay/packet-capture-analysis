@@ -100,20 +100,6 @@ def compute(List, node) :
    avgrplydelay = round(delay/counter, 2)
    #Average HopCount
    avgHopCount = round(sumTTL/count,2)
-
-   print("Echo Request Sent: " + str(SentReq))	
-   print("Echo Requests Recieved: " + str(RecReq))
-   print("Echo Replies Sent: " + str(SentRep))
-   print("Echo Replies Recieved: " + str(RecRep))
-   print("Echo Request Bytes Sent: " + str(TotalReqSent))
-   print("Echo Request Bytes Received: " + str(TotalReqRec))
-   print("Echo Request Data Sent: " + str(DataReqSent))
-   print("Echo Request Data Received: " + str(DataReqRec) + "\n")
-   print("Average RTT (ms): " + str(rtt))
-   print("Echo Request Throughput: " + str(throughput))
-   print("Echo Request Goodput(kB/sec): " + str(avggoodput))
-   print("Average Reply Delay(us): " + str(avgrplydelay) + "\n")
-   print("Average Echo Request Hop Count: " + str(avgHopCount) )
-
+   
    #Ideas for printing out to CSV file: Return all of the variables listed above, in packet_analyzer.py create, open, and write to file.
    return SentReq, RecReq, SentRep, RecRep, TotalReqSent, TotalReqRec, DataReqSent, DataReqRec, rtt, throughput, avggoodput, avgrplydelay, avgHopCount

@@ -35,24 +35,24 @@ nodes.append(node4)
 
 for i in range(0,4):
 	if i == 0:
-		SentReq, RecReq, SentRep, RecRep, TotalReqSent, TotalReqRec, DataReqSent, DataReqRec, rtt, throughput, avggoodput, avgrplydelay = compute(nodes[i], 1)
+		SentReq, RecReq, SentRep, RecRep, TotalReqSent, TotalReqRec, DataReqSent, DataReqRec, rtt, throughput, avggoodput, avgrplydelay, avgHopCount= compute(nodes[i], 1)
 		csv = open(FileName, 'w')
 		NodeInfo = ("Echo Requests Sent,Echo Requests Received,Echo Replies Sent,Echo Replies Receieved" + "\n" + str(SentReq) + "," + str(RecReq) + "," + str(SentRep) + "," + str(RecRep) + "\n" + 
 					"Echo Request Bytes Sent (bytes),Echo Request Data Sent (bytes)" + "\n" + str(TotalReqSent) + "," + str(TotalReqRec) + "\n" +
 					"Echo Request Bytes Received (bytes),Echo Request Data Received (bytes)" + "\n" + str(DataReqSent) + "," + str(DataReqRec) + "\n" + "\n" + "Average RTT (miliseconds)," + 
 					str(rtt) + "\n" + "Echo Request Throughput (kB/sec)," + str(throughput) + "\n" + "Echo Request Goodput (kB/sec)," + str(avggoodput) + "\n" + "Average Reply Delay (microseconds)," + 
-					str(avgrplydelay) + "\n" + "Average Echo Request Hop Count," + "num")
+					str(avgrplydelay) + "\n" + "Average Echo Request Hop Count," + str(avgHopCount))
 		csv.write(str("Node" + str(i + 1)) + "\n" + "\n" + NodeInfo + "\n" + "\n")
 		csv.close()
 	
 	else:
-		SentReq, RecReq, SentRep, RecRep, TotalReqSent, TotalReqRec, DataReqSent, DataReqRec, rtt, throughput, avggoodput, avgrplydelay = compute(nodes[i], 1)
+		SentReq, RecReq, SentRep, RecRep, TotalReqSent, TotalReqRec, DataReqSent, DataReqRec, rtt, throughput, avggoodput, avgrplydelay, avgHopCount = compute(nodes[i], 1)
 		csv = open(FileName, 'a')
 		NodeInfo = ("Echo Requests Sent,Echo Requests Received,Echo Replies Sent,Echo Replies Receieved" + "\n" + str(SentReq) + "," + str(RecReq) + "," + str(SentRep) + "," + str(RecRep) + "\n" + 
 					"Echo Request Bytes Sent (bytes),Echo Request Data Sent (bytes)" + "\n" + str(TotalReqSent) + "," + str(TotalReqRec) + "\n" +
 					"Echo Request Bytes Received (bytes),Echo Request Data Received (bytes)" + "\n" + str(DataReqSent) + "," + str(DataReqRec) + "\n" + "\n" + "Average RTT (miliseconds)," + 
 					str(rtt) + "\n" + "Echo Request Throughput (kB/sec)," + str(throughput) + "\n" + "Echo Request Goodput (kB/sec)," + str(avggoodput) + "\n" + "Average Reply Delay (microseconds)," + 
-					str(avgrplydelay) + "\n" + "Average Echo Request Hop Count," + "num")
+					str(avgrplydelay) + "\n" + "Average Echo Request Hop Count," + str(avgHopCount))
 		csv.write(str("Node" + str(i + 1)) + "\n" + "\n" + NodeInfo + "\n" + "\n")
 		csv.close()
 			
